@@ -6,19 +6,24 @@ from keras.layers.convolutional import Conv2D, MaxPooling2D
 from keras.optimizers import SGD, Adam, RMSprop
 import keras
 import matplotlib.pyplot as pit
+from keras.preprocessing.image import ImageDataGenerator
+
+NUM_TO_AUGMENT=5
+
 
 IMG_CHANNELS = 3
 IMG_ROWS = 32
 IMG_COLS = 32
 
-BATCH_SIZE = 128
+BATCH_SIZE = 256
 NB_EPOCH = 40
 NB_CLASSES = 10
 VERBOSE = 1
 VALIDATION_SPLIT = 0.2
-OPTIM = RMSprop()
+OPTIM = Adam()
 
 (X_train, y_train), (X_test, y_test) = cifar10.load_data()
+
 print('X_train shape:', X_train.shape)
 print(X_train.shape[0], 'train samples')
 print(X_test.shape[0], 'test samples')
@@ -51,6 +56,12 @@ model.add(Activation('sigmoid'))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Dropout(0.3))
 
+model.add(Conv2D(64,(3,3), padding='same'))
+model.add(Activation('sigmoid'))
+model.add(Conv2D(64,(3,3)))
+model.add(Activation('sigmoid'))
+model.add(MaxPooling2D(pool_size=(2, 2)))
+model.add(Dropout(0.3))
 
 model.add(Flatten())
 model.add(Dense(512))
