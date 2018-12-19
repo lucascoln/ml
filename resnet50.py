@@ -116,7 +116,7 @@ batch_size = 64
 checkpoint = ModelCheckpoint(filepath='MLP.weights.best.hdf5', verbose=1, save_best_only=True)
 
 
-model.fit(datagen_train.flow(x_train, y_train, batch_size=64),epochs=200,validation_data=(x_test,y_test),verbose=1,callbacks=[checkpoint])
+model.fit(x_train, y_train, batch_size=64,epochs=200,validation_data=(x_test,y_test),verbose=1,callbacks=[checkpoint])
 
 
 model.load_weights('MLP.weights.best.hdf5')
