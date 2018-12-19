@@ -115,12 +115,12 @@ model.summary()
 batch_size = 64
 checkpoint = ModelCheckpoint(filepath='MLP.weights.best.hdf5', verbose=1, save_best_only=True)
 model.fit_generator(datagen_train.flow(x_train, y_train, batch_size=32),
-                    steps_per_epoch=x_train.shape[0] // batch_size,
+                    steps_per_epoch=x_train.shape[0],
                     epochs = 100,
                     verbose=2,
                     callbacks=[checkpoint],
                     validation_data=(x_valid, y_valid),
-                    validation_steps=x_valid.shape[0] // batch_size)
+                    validation_steps=x_valid.shape[0])
 
 model.load_weights('MLP.weights.best.hdf5')
 score = model.evaluate(x_test, y_test, verbose=1)
